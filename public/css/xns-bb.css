@@ -37,6 +37,10 @@ html{
 	width: 2rem;
 	height: 2rem;
 }
+.aui-col-xs-4:hover{
+	
+	background-color: #000;
+}
 /*.aui-bar-nav{
 	background-color: #dddddd !important;
 	color: #00A2CC !important;

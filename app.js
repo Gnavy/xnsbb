@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var todos = require('./routes/todos');
 var AV = require('leanengine');
 
+var clean = require('./routes/clean')
+
 var app = express();
 
 // 设置模板引擎
@@ -28,6 +30,10 @@ app.use(cookieParser());
 
 app.get('/', function(req, res) {
   res.render('index', { currentTime: new Date() });
+});
+
+app.get('/clean', function(req, res) {
+  res.render('clean', { currentTime: new Date() });
 });
 
 // 可以将一类的路由单独保存在一个文件中
