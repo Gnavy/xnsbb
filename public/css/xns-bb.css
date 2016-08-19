@@ -1,8 +1,3 @@
-.header{
-	
-	background-color: #535353;
-	height: 5rem;
-}
 
 html{
 	background-color:#21333e;
@@ -10,8 +5,8 @@ html{
 	font-size:14px;
 }
 .swiper-container {
-    width: 500px;
-    height: 300px;
+    width: 100%;
+    height: 150px;
     margin: 20px auto;
 }
 .swiper-slide {
@@ -33,3 +28,16 @@ html{
     -webkit-align-items: center;
     align-items: center;
 }
+.swiper-myimg{
+	
+	width: 100%;
+}
+.nav-icon{
+	
+	width: 2rem;
+	height: 2rem;
+}
+/*.aui-bar-nav{
+	background-color: #dddddd !important;
+	color: #00A2CC !important;
+}*/
