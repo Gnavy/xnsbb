@@ -1,13 +1,28 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>LeanEngine</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>小能手帮帮</title>   
+    <link rel="stylesheet" href="/css/xns-bb.css" />
+    <link rel="stylesheet" href="/css/swiper-3.3.1.min.css">
+    <script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/js/swiper-3.3.1.min.js"></script>
   </head>
   <body>
-    <h1>LeanEngine</h1>
-    <p>这是 LeanEngine 的示例应用</p>
-    <p>当前时间：<%= currentTime %></p>
-    <p><a href="/todos">一个简单的「TODO 列表」示例</a></p>
-  </body>
+  	<div class="swiper-container">
+	    <div class="swiper-wrapper">
+	        <div class="swiper-slide">Slide 1</div>
+	        <div class="swiper-slide">Slide 2</div>
+	        <div class="swiper-slide">Slide 3</div>
+	    </div>
+	</div> 	  	
+  
+	<script>  
+	  //初始化swiper      
+	  var mySwiper = new Swiper ('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        spaceBetween: 30,
+	  })        
+	</script>
+  </body> 
 </html>
