@@ -6,10 +6,9 @@
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<title>绑定手机</title>
 		<link rel="stylesheet" href="/css/xns-bb.css" />
-		<link rel="stylesheet" href="/css/swiper-3.3.1.min.css">
 		<link rel="stylesheet" type="text/css" href="/aui/css/aui.2.0.css" />
 		<script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
-		<script src="/js/swiper-3.3.1.min.js"></script>
+		<script type="text/javascript" src="/js/common.js"></script>
 	</head>
 
 	<body>
@@ -24,14 +23,13 @@
 
 			<section class="aui-grid aui-margin-b-15 " style="background: #fff;">
 				<div class="aui-row">
-						<input type="tel" placeholder="请输入手机号码" style="background-color: #FFFFFF; padding-left: 0.7rem;width: 100%;" />
-					
+					<input id="phoneNumber" type="tel" placeholder="请输入手机号码" style="background-color: #FFFFFF; padding-left: 0.7rem;width: 100%;" />
 				</div>
-				
+
 			</section>
 		</section>
 		<section class="aui-content-padded" style="text-align: center;">
-			<div class="checkbtn-active">下一步</div>
+			<div id="next" class="checkbtn-disabled" disabled="disabled">下一步</div>
 		</section>
 
 		<section class="aui-content-padded">
@@ -46,5 +44,27 @@
 			</div>
 		</section>
 	</body>
+	<script>
+		$("#phoneNumber").on("input", function() {
+
+			if (checkMobile($(this).val())) {
+				$("#next").removeClass("checkbtn-disabled");
+				$("#next").addClass("checkbtn-active");
+			} else {
+				$("#next").removeClass("checkbtn-active");
+				$("#next").addClass("checkbtn-disabled");
+			}
+
+		})
+		$("#next").click(function() {
+
+			if ($(this).hasClass("checkbtn-active")) {
+				if(confirm("是否要向号码："+$("#phoneNumber").val()+"，发送验证短信？")){
+					alert("跳转");
+				}
+			}
+
+		})
+	</script>
 
 </html>
