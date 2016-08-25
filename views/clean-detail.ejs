@@ -25,16 +25,16 @@
 			<section class="aui-grid aui-margin-b-15 " style="background: #fff;">
 				<div class="aui-row">
 					<div class="aui-col-xs-4">
-						<a href="/clean">
-							<img class="nav-icon" src="/image/application/fridge.png">
-							<div class="aui-grid-label">双门冰箱</div>
-						</a>
+						<img class="nav-icon" src="<%= item.get('ItemIMG').thumbnailURL(200, 200) %>">
+						<div class="aui-grid-label">
+							<%= item.get('ItemNM')%>
+						</div>
 					</div>
 					<div class="aui-col-xs-8" style="border-left: 1px solid #F5F5F5;text-align: left; padding-left: 1rem;">
 
-						<h4> 服务：冰箱清洗</h4>
-						<h4> 用时：2小时</h4>
-						<h4 style="color: #FF2600"> 价格：￥99.00</h4>
+						<h4> 服务：<%= item.get('ItemNM')%>清洗</h4>
+						<h4> 用时：<%= item.get('ItemTM')%>小时</h4>
+						<h4 style="color: #FF2600"> 价格：￥<%= item.get('ItemPRI')%></h4>
 
 					</div>
 				</div>

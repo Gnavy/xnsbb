@@ -6,10 +6,8 @@
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<title>家电清洗</title>
 		<link rel="stylesheet" href="/css/xns-bb.css" />
-		<link rel="stylesheet" href="/css/swiper-3.3.1.min.css">
 		<link rel="stylesheet" type="text/css" href="/aui/css/aui.2.0.css" />
 		<script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
-		<script src="/js/swiper-3.3.1.min.js"></script>
 	</head>
 
 	<body>
@@ -24,70 +22,23 @@
 
 			<section class="aui-grid aui-margin-b-15 " style="background: #fff; color: #fff;">
 				<div class="aui-row">
+					<% for(var i=0; i<items.length; i++) {%>
 					<div class="aui-col-xs-4">
-						<a href="/clean-detail">
-							<div class="aui-badge">hot</div>
-							<img class="nav-icon" src="/image/application/fridge.png">
-							<div class="aui-grid-label">双门冰箱</div>
-					</div>
-					<div class="aui-col-xs-4">
-						<a href="/clean-detail">
-							<img class="nav-icon" src="/image/application/washing-machine.png">
-							<div class="aui-grid-label">滚筒洗衣机</div>
+						<a href="/clean/detail/<%=items[i].get('id')%>">
+							<%if(items[i].get('ItemHT')){%>
+							<div class="aui-badge">热门</div>
+							<%}%>
+							<img class="nav-icon" src="<%= items[i].get('ItemIMG').thumbnailURL(200, 200) %>">
+							<div class="aui-grid-label">
+								<%= items[i].get('ItemNM') %>
+							</div>
 						</a>
 					</div>
-					<div class="aui-col-xs-4">
-						<a href="/clean-detail">
-							<img class="nav-icon" src="/image/application/air-conditioner.png">
-							<div class="aui-grid-label">挂式空调</div>
-						</a>
-					</div>
-					<div class="aui-col-xs-4">
-						<a href="/clean-detail">
-							<img class="nav-icon" src="/image/application/central-air-conditioner.png">
-							<div class="aui-grid-label">中央空调</div>
-						</a>
-					</div>
-					<div class="aui-col-xs-4">
-						<a href="/clean-detail">
-							<img class="nav-icon" src="/image/application/d-fridge.png">
-							<div class="aui-grid-label">对门冰箱</div>
-						</a>
-					</div>
-					<div class="aui-col-xs-4">
-						<a href="/clean-detail">
-							<img class="nav-icon" src="/image/application/b-washing-machine.png">
-							<div class="aui-grid-label">波轮洗衣机</div>
-						</a>
-					</div>
-					<div class="aui-col-xs-4">
-						<a href="/clean-detail">
-							<img class="nav-icon" src="/image/application/hood.png">
-							<div class="aui-grid-label">抽油烟机</div>
-						</a>
-					</div>
-					<div class="aui-col-xs-4">
-						<a href="/clean-detail">
-							<img class="nav-icon" src="/image/application/stove.png">
-							<div class="aui-grid-label">燃气灶</div>
-					</div>
-					<div class="aui-col-xs-4">
-						<a href="/clean-detail">
-							<img class="nav-icon" src="/image/application/shower.png">
-							<div class="aui-grid-label">热水器</div>
-						</a>
-					</div>
+					<% } %>
 				</div>
 			</section>
 		</section>
-
 		<script>
-			//初始化swiper      
-			var mySwiper = new Swiper('.swiper-container', {
-				pagination: '.swiper-pagination',
-				paginationType: 'bullets',
-				paginationClickable: true
-			})
 		</script>
 	</body>
 
