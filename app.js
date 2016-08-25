@@ -36,6 +36,17 @@ app.get('/clean', function(req, res) {
   res.render('clean', { currentTime: new Date() });
 });
 
+app.get('/clean-detail', function(req, res) {
+  res.render('clean-detail', { currentTime: new Date() });
+});
+
+app.get('/phone-bound', function(req, res) {
+  res.render('phone-bound', { currentTime: new Date() });
+});
+app.get('/phone-verify', function(req, res) {
+  res.render('phone-verify', { currentTime: new Date() });
+});
+
 // 可以将一类的路由单独保存在一个文件中
 app.use('/todos', todos);
 
