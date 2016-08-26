@@ -6,10 +6,9 @@
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<title>家电清洗</title>
 		<link rel="stylesheet" href="/css/xns-bb.css" />
-		<link rel="stylesheet" href="/css/swiper-3.3.1.min.css">
 		<link rel="stylesheet" type="text/css" href="/aui/css/aui.2.0.css" />
 		<script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
-		<script src="/js/swiper-3.3.1.min.js"></script>
+		<script src="/js/common.js"></script>
 	</head>
 
 	<body>
@@ -49,22 +48,16 @@
 				<div class="aui-card-list-header" style="border-bottom: solid 1px #F5F5F5;">
 					服务详情：
 				</div>
-				<div class="aui-card-list-content-padded" style="border-bottom: solid 1px #F5F5F5;">
-					冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述 冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述 冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述 冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述 冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述冰箱清洗内容描述
+				<div class="aui-card-list-content-padded" id="detail" style="border-bottom: solid 1px #F5F5F5;">
+					<%= item.get('ItemDES')%>
 				</div>
 				<div class="aui-card-list-footer">
-					温馨提示：若机器出现如下故障，不予以保养。
+					<%= item.get('ItemTS')%>
 				</div>
 			</div>
 		</section>
-
 		<script>
-			//初始化swiper      
-			var mySwiper = new Swiper('.swiper-container', {
-				pagination: '.swiper-pagination',
-				paginationType: 'bullets',
-				paginationClickable: true
-			})
+			$("#detail").html(escape2Html($("#detail").html()));
 		</script>
 	</body>
 

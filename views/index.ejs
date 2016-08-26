@@ -10,24 +10,26 @@
 		<link rel="stylesheet" type="text/css" href="/aui/css/aui.2.0.css" />
 		<script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
 		<script src="/js/swiper-3.3.1.min.js"></script>
+
 	</head>
 
 	<body>
-		<header class="aui-bar aui-bar-nav">
-			<div class="aui-title">小能手·帮帮</div>
-			<a class="aui-pull-right aui-btn ">
-				<span class="aui-iconfont aui-icon-my"></span>
-			</a>
-		</header>
-
 		<div class="swiper-container">
 			<div class="swiper-wrapper">
-				<div class="swiper-slide"><img class="swiper-myimg" src="/image/l1.png"></div>
-				<div class="swiper-slide"><img class="swiper-myimg" src="/image/l2.png"></div>
-				<div class="swiper-slide"><img class="swiper-myimg" src="/image/l3.png"></div>
+				<% for(var i=0; i<swiper.length; i++) {%>
+				<div class="swiper-slide"><a href="<%=swiper[i].get('SwiperUrl')%>"><img class="swiper-myimg" src="<%=swiper[i].get('SwiperImg').thumbnailURL(400, 400)%>"></a></div>
+				<%}%>
 			</div>
 			<div class="swiper-pagination"></div>
 		</div>
+		<script>
+			//初始化swiper      
+			var mySwiper = new Swiper('.swiper-container', {
+				pagination: '.swiper-pagination',
+				paginationType: 'bullets',
+				paginationClickable: false
+			})
+		</script>
 		<section class="aui-content-padded">
 			<section class="aui-grid aui-margin-b-15 " style="background: #fff; color: #000;">
 				<div class="aui-row">
@@ -36,7 +38,7 @@
 							<div class="aui-badge">7折</div>
 							<img class="nav-icon" src="/image/clean.png">
 							<div class="aui-grid-label">家电清洗</div>
-							</>
+						</a>
 					</div>
 					<div class="aui-col-xs-6">
 						<img class="nav-icon" src="/image/tools.png">
@@ -54,14 +56,14 @@
 				</div>
 			</section>
 		</section>
-		<script>
-			//初始化swiper      
-			var mySwiper = new Swiper('.swiper-container', {
-				pagination: '.swiper-pagination',
-				paginationType: 'bullets',
-				paginationClickable: true
-			})
-		</script>
+		<section class="aui-content-padded">
+			<div class="aui-card-list">
+				<div class="aui-card-list-footer"  style="font-size: 0.5rem;">
+					北京小能手帮帮科技有限公司
+				</div>
+			</div>
+		</section>
+
 	</body>
 
 </html>
