@@ -20,14 +20,11 @@
 				<div class="swiper-slide"><a href="<%=swiper[i].get('SwiperUrl')%>"><img class="swiper-myimg" src="<%=swiper[i].get('SwiperImg').thumbnailURL(400, 400)%>"></a></div>
 				<%}%>
 			</div>
-			<div class="swiper-pagination"></div>
 		</div>
 		<script>
 			//初始化swiper      
 			var mySwiper = new Swiper('.swiper-container', {
-				pagination: '.swiper-pagination',
-				paginationType: 'bullets',
-				paginationClickable: false
+				autoplay: 5000
 			})
 		</script>
 		<section class="aui-content-padded">
@@ -58,7 +55,7 @@
 		</section>
 		<section class="aui-content-padded">
 			<div class="aui-card-list">
-				<div class="aui-card-list-footer"  style="font-size: 0.5rem;">
+				<div class="aui-card-list-footer" style="font-size: 0.5rem;">
 					北京小能手帮帮科技有限公司
 				</div>
 			</div>
