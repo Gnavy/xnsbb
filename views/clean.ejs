@@ -7,10 +7,16 @@
 		<title>家电清洗</title>
 		<link rel="stylesheet" href="/css/xns-bb.css" />
 		<link rel="stylesheet" type="text/css" href="/aui/css/aui.2.0.css" />
-		<script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/animate.css" />
+		<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
 	</head>
+	<script>
+		itemsIdx = new Array();
+		choosedItem = new Array();
+		allIdx = 0;
+	</script>
 
-	<body>
+	<body class="animated zoomIn">
 		<section class="aui-content-padded">
 			<div class="aui-card-list">
 				<div class="aui-card-list-header">
@@ -19,26 +25,61 @@
 			</div>
 		</section>
 		<section class="aui-content-padded">
-
+			<div class="aui-card-list">
+				<div class="aui-card-list-header" style="font-size: 12px;">
+					优惠：
+					<br> 同时清洗2台，享9折优惠；
+					<br> 同时清洗3台，享8折优惠;
+				</div>
+			</div>
+		</section>
+		<section class="aui-content-padded ">
 			<section class="aui-grid aui-margin-b-15 " style="background: #fff; color: #fff;">
-				<div class="aui-row">
-					<% for(var i=0; i<items.length; i++) {%>
-					<div class="aui-col-xs-4">
-						<a href="/clean/detail/<%=items[i].get('id')%>">
-							<%if(items[i].get('ItemHT')){%>
-							<div class="aui-badge">热门</div>
-							<%}%>
+				<form id="chooseFm" action="/clean/order" method="post">
+					<div class="aui-row">
+						<% for(var i=0; i<items.length; i++) {%>
+
+						<script>
+							itemsIdx["<%=items[i].get('id')%>"] = 0;
+						</script>
+						<div class="aui-col-xs-4 cleanItem" itemId="<%=items[i].get('id')%>">
+							<!--<a href="/clean/detail/<%=items[i].get('id')%>">-->
+							<!--<div class="aui-badge"></div>-->
 							<img class="nav-icon" src="<%= items[i].get('ItemIMG').thumbnailURL(200, 200) %>">
-							<div class="aui-grid-label">
+							<div class="aui-grid-label" style="color: #333333;">
 								<%= items[i].get('ItemNM') %>
 							</div>
-						</a>
+							<div class="aui-grid-label" style="color: #333333;font-size: 12px;">
+								<%= items[i].get('ItemPRI')%>元
+							</div>
+							<!--</a>-->
+						</div>
+						<% } %>
 					</div>
-					<% } %>
-				</div>
+				</form>
 			</section>
 		</section>
+		<section class="aui-content-padded" style="text-align: center;">
+			<div class="checkbtn-disabled" id="goOrder" onclick="goOrder()">去结算</div>
+		</section>
 		<script>
+			index = 0;
+		</script>
+		<script>
+			$(".cleanItem").click(function() {
+						var itemId = $(this).attr("itemId");
+						itemsIdx[itemId]++;
+						allIdx++;
+						$(this).append("<div itemId='" + itemId + "' class='aui-badge animated bounceIn'>" + itemsIdx[itemId] + "</div>");
+						$(this).append('<input type="hidden" name="choosedItems" value="' + itemId + '"/>');
+							$(this).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+								$(this).removeClass("animated bounceIn");
+							}); $("#goOrder").removeClass("checkbtn-disabled"); $("#goOrder").addClass("checkbtn-active"); $("#goOrder").html("去结算（ " + allIdx + " ）");
+						})
+
+					function goOrder() {
+						$("#chooseFm").submit();
+					}
 		</script>
 	</body>
 

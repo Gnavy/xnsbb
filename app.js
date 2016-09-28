@@ -39,8 +39,7 @@ app.get('/', function(req, res) {
 		res.render('index', {
 			swiper: results
 		});
-	}, function(err) {
-	});
+	}, function(err) {});
 });
 
 app.get('/phone-bound', function(req, res) {
@@ -54,13 +53,47 @@ app.get('/phone-verify', function(req, res) {
 	});
 });
 
+app.get('/order', function(req, res) {
+	res.render('clean', {
+		currentTime: new Date()
+	});
+});
+app.get("/user/requestSms/:phone", function(req, res) {
+
+	var phone = req.params.phone;
+	AV.Cloud.requestSmsCode(phone).then(function(success) {
+		res.json({
+			res: true
+		});
+	}, function(error) {
+		res.json({
+			res: false
+		});
+	});
+
+});
+app.get("/user/checkPhone/:phone/:code", function(req, res) {
+	var phone = req.params.phone;
+	var code = req.params.code;
+	AV.User.signUpOrlogInWithMobilePhone(phone, code).then(function(success) {
+		res.json({
+			res: true
+		});
+	}, function(error) {
+		res.json({
+			res: false
+		});
+	});
+
+});
+
 // 可以将一类的路由单独保存在一个文件中
 app.use('/todos', todos);
 app.use("/clean", clean);
 
 app.use(function(req, res, next) {
 	// 如果任何一个路由都没有返回响应，则抛出一个 404 异常给后续的异常处理器
-	if (!res.headersSent) {
+	if(!res.headersSent) {
 		var err = new Error('Not Found');
 		err.status = 404;
 		next(err);
@@ -70,16 +103,16 @@ app.use(function(req, res, next) {
 // error handlers
 app.use(function(err, req, res, next) { // jshint ignore:line
 	var statusCode = err.status || 500;
-	if (statusCode === 500) {
+	if(statusCode === 500) {
 		console.error(err.stack || err);
 	}
-	if (req.timedout) {
+	if(req.timedout) {
 		console.error('请求超时: url=%s, timeout=%d, 请确认方法执行耗时很长，或没有正确的 response 回调。', req.originalUrl, err.timeout);
 	}
 	res.status(statusCode);
 	// 默认不输出异常详情
 	var error = {}
-	if (app.get('env') === 'development') {
+	if(app.get('env') === 'development') {
 		// 如果是开发环境，则将异常堆栈输出到页面，方便开发调试
 		error = err;
 	}

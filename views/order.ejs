@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>订单信息</title>
+		<link rel="stylesheet" href="/css/xns-bb.css" />
+		<link rel="stylesheet" type="text/css" href="../aui/css/aui.2.0.css" />
+		<link rel="stylesheet" href="/css/mobiscroll.2.17.0.min.css" type="text/css" />
+		<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+		<script src="../aui/script/api.js"></script>
+		<script src="../aui/script/aui-dialog.js"></script>
+
+		<script src="/js/mobiscroll.2.17.0.min.js"></script>
+		<script type="text/javascript" src="/js/common.js"></script>
+		<script type="text/javascript">
+			var allPrice = 0;
+			var allCount = 0;
+			$(function() {
+
+				$.ajaxSetup({
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					}
+				});
+				var now = new Date();
+				now.setHours(now.getHours() + 12);
+				// Mobiscroll Date & Time initialization
+				$('#time').mobiscroll().datetime({
+					theme: 'mobiscroll', // Specify theme like: theme: 'ios' or omit setting to use default
+					lang: 'zh', // Specify language like: lang: 'pl' or omit setting to use default
+					display: 'bottom', // Specify display mode like: display: 'bottom' or omit setting to use default
+					dateOrder: 'MMdd DD',
+					timeWheels: 'A',
+					minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+					onClosed: function(valueText, inst) {
+						valueText = valueText.replace("00:00", "上午");
+						valueText = valueText.replace("12:00", "下午");
+						document.querySelector('#myTime').value = valueText;
+					},
+					headerText: "选择预约时间" // More info about headerText: http://docs.mobiscroll.com/2-17-1/datetime#!opt-headerText
+				});
+			});
+		</script>
+
+		<script type="text/javascript">
+		</script>
+	</head>
+	<style>
+		.aui-bar-btn-item.aui-active {
+			background-color: #0953EC;
+			border-color: #0953EC;
+		}
+		
+		.aui-bar-btn-item {
+			border-color: #0953EC;
+			font-size: 12px;
+		}
+		
+		.aui-bar-btn.aui-bar {
+			margin-left: 0;
+			padding-right: 1rem;
+			min-height: 1px;
+		}
+		
+		.aui-grid .aui-iconfont {
+			font-size: 12px;
+		}
+		
+		.aui-bar-btn-item.aui-active:first-child {
+			color: #fff;
+		}
+	</style>
+
+	<body>
+		<section class="aui-content-padded">
+			<div class="aui-card-list">
+				<div class="aui-card-list-header">
+					<b>填写订单信息</b>
+				</div>
+			</div>
+		</section>
+		<form id="userOrder" action="/clean/orderSubmit" method="post">
+			<section class="aui-content-padded">
+				<section class="aui-grid aui-margin-b-15 " style="background: #fff;">
+					<% for(var key in items) {%>
+					<div class="aui-row">
+						<div class="aui-col-xs-4">
+							<img id="IMG<%=key%>" class="nav-icon" src="../image/loading.gif">
+							<div class="aui-grid-label">
+							</div>
+						</div>
+						<div class="aui-col-xs-8" style="border-left: 1px solid #F5F5F5;text-align: left; padding-left: 1rem;">
+							<h4 id="SER<%=key%>">正在加载..</h4>
+							<h4 id="PRI<%=key%>">正在加载..</h4>
+							<div class="aui-bar aui-bar-btn" type="count" id="demo">
+								<div id="MIN<%=key%>" class="aui-bar-btn-item aui-font-size-10" price>
+									<i class="aui-iconfont aui-icon-minus"></i>
+								</div>
+								<div class="aui-bar-btn-item">
+									<input name="itemCount" type="number" readonly="true" class="aui-input aui-text-center "  id="count" value="<%=items[key]%>">
+								</div>
+								<div id="PLU<%=key%>" class="aui-bar-btn-item aui-font-size-10" price>
+									<i class="aui-iconfont aui-icon-plus"></i>
+								</div>
+							</div>
+							<input type="hidden" value="<%=key%>" name="itemID" />
+						</div>
+					</div>
+					<script>
+						$.get("/clean/detail/<%=key%>", function(res) {
+							$("#PRI<%=key%>").html("单价：￥" + res.ItemPRI);
+							$("#SER<%=key%>").html("项目：" + res.ItemNM + "清洗");
+							$("#IMG<%=key%>").attr("src", res.ItemIMG.url);
+							$("#MIN<%=key%>").attr("price", res.ItemPRI);
+							$("#PLU<%=key%>").attr("price", res.ItemPRI);
+							allPrice += res.ItemPRI * <%=items[key]%>;
+							allCount += <%=items[key]%>;
+							countPrice();
+						});
+					</script>
+					<% } %>
+
+					<div class="aui-row" style="border-top: 1px solid #F5F5F5;text-align: right; padding: 1rem;font-size: 12px;">
+						<span id="yuanjia">原价：￥0</span><br>
+						<span id="promotion">折扣：￥-0</span><br>
+						<span id="allPrice" style="font-size: 18px;font-weight: 300;">总价：￥100</span>
+					</div>
+				</section>
+
+			</section>
+			<section class="aui-content-padded">
+				<div class="aui-card-list">
+					<ul class="aui-list aui-form-list">
+						<li class="aui-list-item">
+							<div class="aui-list-item-inner">
+								<div class="aui-list-item-label">
+									优惠码
+								</div>
+								<div class="aui-list-item-input">
+									<input name="promotionCode" id="promotionCode" type="text" placeholder="如有优惠码请输入">
+								</div>
+							</div>
+						</li>
+						<ul>
+				</div>
+			</section>
+			<section class="aui-content-padded">
+				<div id="err" class="" style="font-size: 12px;color: red;padding-left: 10px;padding-bottom: 10px;display: none;">
+					*联系人信息
+				</div>
+				<div class="aui-card-list">
+					<ul class="aui-list aui-form-list">
+						<li class="aui-list-item">
+							<div class="aui-list-item-inner">
+								<div class="aui-list-item-label">
+									联系人
+								</div>
+								<div class="aui-list-item-input">
+									<input id="userName" name="userName" type="text" placeholder="您怎么称呼？">
+								</div>
+							</div>
+						</li>
+						<li class="aui-list-item">
+							<div class="aui-list-item-inner">
+								<div class="aui-list-item-label">
+									手机号
+								</div>
+								<div class="aui-list-item-input">
+									<input id="phoneNumber" name="phoneNumber" type="tel" placeholder="您的手机号码">
+								</div>
+							</div>
+						</li>
+						<li class="aui-list-item">
+							<div class="aui-list-item-inner">
+								<div class="aui-list-item-label">
+									地址
+								</div>
+								<div class="aui-list-item-input">
+									<input id="userAddr" name="userAddr" type="text" placeholder="区-街道-小区-楼号-门牌号">
+								</div>
+							</div>
+						</li>
+						<li class="aui-list-item">
+							<div class="aui-list-item-inner">
+								<div class="aui-list-item-label">
+									预约时间
+								</div>
+								<div class="aui-list-item-input" id="time">
+									<input id="myTime" name="orderTM" type="text" placeholder="点击选择">
+								</div>
+							</div>
+						</li>
+						<ul>
+				</div>
+			</section>
+		</form>
+		<section class="aui-content-padded" style="text-align: center;">
+			<div class="checkbtn-active" onclick="openDialog()">现在下单</div>
+		</section>
+		<script type="application/javascript">
+			function checkInput() {
+
+				if(!checkMobile($("#phoneNumber").val()) || $("#userName").val() == "" || $("#userAddr").val() == "" || $("#myTime").val() == "") {
+					return false;
+				} else {
+					return true;
+				}
+
+			}
+
+			$("#phoneNumber").blur(function() {
+				if($(this).val() == "") {
+					return;
+				}
+				if(!checkMobile($(this).val())) {
+					$(this).css("color", "red");
+					showErr("手机号格式错误");
+				} else {
+
+					heideErr()
+				}
+			})
+			$("input").focus(function() {
+				$(this).css("color", "black");
+			})
+
+			function showErr(tx) {
+				$("#err").css("display", "block");
+				$("#err").html("* " + tx);
+			}
+
+			function heideErr() {
+				$("#err").css("display", "none");
+
+			}
+		</script>
+		<script src="../aui/script/aui-tab.js"></script>
+		<script>
+			apiready = function() {
+				api.parseTapmode();
+			}
+			var bar = document.querySelectorAll(".aui-bar-btn");
+			if(bar) {
+				for(var i = 0; i < bar.length; i++) {
+					var d = bar[i];
+					var tab = new auiTab({
+						element: bar[i],
+						repeatClick: true
+					}, function(ret) {
+						if(ret.dom.parentNode.getAttribute("type") && ret.dom.parentNode.getAttribute("type") == "count") {
+							var count = 0;
+							if(ret.index == 2) return;
+							if(ret.index == 1) {
+								count = parseInt($(ret.dom).next().children().val());
+								if(count == 0) return;
+								$(ret.dom).next().children().val(--count);
+								allPrice -= parseInt($(ret.dom).attr("price"));
+								allCount--;
+								countPrice();
+							}
+							if(ret.index == 3) {
+								count = parseInt($(ret.dom).prev().children().val());
+								$(ret.dom).prev().children().val(++count);
+								allPrice += parseInt($(ret.dom).attr("price"));
+								allCount++;
+								countPrice();
+
+							}
+						}
+					});
+
+				}
+			}
+
+			$("#promotionCode").blur(function() {
+				var code = $("#promotionCode").val();
+				if($("#promotionCode").val() == "") {
+					return;
+				}
+				$.get("/clean/checkPromotion/" + code, function(res) {
+					if(res.res) {
+						dialog.alert({
+							title: "优惠提示",
+							msg: res.msg,
+							buttons: ['确定']
+						}, function(ret) {
+							console.log(ret)
+						})
+						$("#promotionCode").css("color", "greenyellow");
+					} else {
+						dialog.alert({
+							title: "错误提示",
+							msg: res.msg,
+							buttons: ['确定']
+						}, function(ret) {
+							console.log(ret)
+						})
+						$("#promotionCode").css("color", "red");
+
+					}
+				})
+				countPrice();
+			});
+
+			function countPrice() {
+				var code = $("#promotionCode").val();
+				if($("#promotionCode").val() == "") {
+					code = 1;
+				}
+
+				$.get("/clean/getProPrice/" + allPrice + "/" + allCount + "/" + code, function(res) {
+					$("#yuanjia").html("原价：<s>￥ -" + allPrice + "</s>")
+					$("#promotion").html("折扣：￥ -" + res.promotion)
+					$("#allPrice").html("总价：￥" + (allPrice - res.promotion));
+				});
+			}
+			var dialog = new auiDialog({})
+
+			function openDialog() {
+
+				if(allPrice==0){
+					dialog.alert({
+						title: "错误提示",
+						msg: "似乎没有选择任何设备",
+						buttons: ['确定']
+					}, function(ret) {
+						console.log(ret)
+					})
+					return
+				}
+
+				if(!checkInput()) {
+					dialog.alert({
+						title: "错误提示",
+						msg: "请检查信息是否完整和无误",
+						buttons: ['确定']
+					}, function(ret) {
+						console.log(ret)
+					})
+					return
+				}
+				
+				//测试代码
+									$("#userOrder").submit();
+									return;
+				//测试代码
+				
+				$.get("/user/requestSms/" + $("#phoneNumber").val(), function(res) {
+					if(res.res) {
+						dialog.prompt({
+							title: "首次下单手机号码验证",
+							text: "请输入收到的短信验证码",
+							buttons: ['确定']
+						}, function(ret) {
+							console.log(ret)
+							$.get("/user/checkPhone/" + $("#phoneNumber").val() + "/" + ret.text, function(res) {
+								if(res.res) {
+									$("#userOrder").submit();
+								}
+							});
+						})
+					}
+				});
+
+			}
+		</script>
+	</body>
+
+</html>
