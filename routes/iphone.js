@@ -2,7 +2,6 @@
 var router = require('express').Router();
 var AV = require('leanengine');
 var Iphone = AV.Object.extend("IphoneGlass");
-var WXPay = require('node-wxpay');
 var fs = require("fs");
 var weixin = require('../wechat/wechat.js');
 
