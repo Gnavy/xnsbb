@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>iPhone 换屏</title>
+		<link rel="stylesheet" href="/css/xns-bb.css" />
+		<link rel="stylesheet" type="text/css" href="/aui/css/aui.2.0.css" />
+		<link rel="stylesheet" type="text/css" href="/css/animate.css" />
+		<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+	</head>
+	<script>
+		itemsIdx = new Array();
+		choosedItem = new Array();
+		allIdx = 0;
+	</script>
+
+	<body class="animated zoomIn">
+		<section class="aui-content-padded">
+			<div class="aui-card-list">
+				<div class="aui-card-list-header">
+					<b>选择 iPhone</b>
+				</div>
+			</div>
+		</section>
+		<section class="aui-content-padded">
+			<div class="aui-card-list">
+
+				<div class="aui-card-list-header" style="font-size: 12px;">
+					说明（如何判断需要更换内屏/外屏）：
+					<br><br>外屏：屏幕破碎，但显示正常；手机屏幕玻璃碎裂，但显示触摸完全正常不影响使用。（不含黄斑、暗伤、亮点、漏液、触摸不灵敏等问题）
+					<br><br>内屏：屏幕花屏或不显示。
+				</div>
+			</div>
+		</section>
+
+		<ul class="tabs">
+			<li>
+				<input type="radio" name="tabs" id="tab1" checked />
+				<label for="tab1">内屏故障</label>
+
+				<section class="aui-content-padded  tab-content" id="tab-content1">
+					<section class="aui-grid aui-margin-b-15" style="background: #fff; color: #fff;">
+						<div class="aui-row">
+							<% for(var i=0; i<items.length; i++) {%>
+
+							<script>
+								itemsIdx["<%=items[i].get('id')%>"] = 0;
+							</script>
+							<a  href="iphone/detail/<%=items[i].get('id')%>/0">
+								<div class="aui-col-xs-4 cleanItem" itemId="<%=items[i].get('id')%>">
+									<!--<a href="/clean/detail/<%=items[i].get('id')%>">-->
+									<!--<div class="aui-badge"></div>-->
+									<img class="nav-icon" src="<%= items[i].get('img').thumbnailURL(200, 200) %>">
+									<div class="aui-grid-label" style="color: #333333;font-size: 8px;">
+										<%= items[i].get('name') %>
+									</div>
+									<div class="aui-grid-label" style="color: #333333;font-size: 12px;">
+										内屏：
+										<%= items[i].get('innerGlassPrice')%> 元
+									</div>
+
+									<!--</a>-->
+								</div>
+							</a>
+							<% } %>
+						</div>
+					</section>
+				</section>
+			</li>
+			<li>
+				<input type="radio" name="tabs" id="tab2" />
+				<label for="tab2">外屏故障</label>
+				<section class="aui-content-padded tab-content" id="tab-content2">
+					<section class="aui-grid aui-margin-b-15 " style="background: #fff; color: #fff;">
+						<div class="aui-row">
+							<% for(var i=0; i<items.length; i++) {%>
+
+							<script>
+								itemsIdx["<%=items[i].get('id')%>"] = 0;
+							</script>
+							<a href="iphone/detail/<%=items[i].get('id')%>/1">
+								<div class="aui-col-xs-4 cleanItem" itemId="<%=items[i].get('id')%>">
+									<!--<a href="/clean/detail/<%=items[i].get('id')%>">-->
+									<!--<div class="aui-badge"></div>-->
+									<img class="nav-icon" src="<%= items[i].get('img').thumbnailURL(200, 200) %>">
+									<div class="aui-grid-label" style="color: #333333;font-size: 8px;">
+										<%= items[i].get('name') %>
+									</div>
+									<div class="aui-grid-label" style="color: #333333;font-size: 12px;">
+										外屏：
+										<%= items[i].get('outerGlassPrice')%> 元
+									</div>
+									<!--</a>-->
+								</div>
+								<% } %>
+							</a>
+						</div>
+					</section>
+				</section>
+			</li>
+
+		</ul>
+		<script>
+			//			index = 0;
+		</script>
+		<script>
+			//			$(".cleanItem").click(function() {
+			//						var itemId = $(this).attr("itemId");
+			//						itemsIdx[itemId]++;
+			//						allIdx++;
+			//						$(this).append("<div itemId='" + itemId + "' class='aui-badge animated bounceIn'>" + itemsIdx[itemId] + "</div>");
+			//						$(this).append('<input type="hidden" name="choosedItems" value="' + itemId + '"/>');
+			//							$(this).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+			//								$(this).removeClass("animated bounceIn");
+			//							}); $("#goOrder").removeClass("checkbtn-disabled"); $("#goOrder").addClass("checkbtn-active"); $("#goOrder").html("去结算（ " + allIdx + " ）");
+			//						})
+			//
+			//					function goOrder() {
+			//						$("#chooseFm").submit();
+			//					}
+		</script>
+	</body>
+
+</html>

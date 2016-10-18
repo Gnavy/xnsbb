@@ -48,6 +48,31 @@ input{
 	min-height:2rem !important;
 }
 
+.tabs input[type="radio"] {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+.tabs .tab-content {
+  z-index: 2;
+  display: none;
+}
+.tabs [id^="tab"]:checked + label {
+  top: 0;
+}
+.tabs [id^="tab"]:checked ~ [id^="tab-content"] {
+  display: block;
+}
+.tabs label {
+  display: block;
+  padding: 14px 21px;
+  border-radius: 2px 2px 0 0;
+  font-size: 12px;
+  border-top: 1px solid #FFFFFF;
+  font-weight: normal;
+  background: #cccccc;
+  position: relative;
+}
 /*.aui-bar-nav{
 	background-color: #dddddd !important;
 	color: #00A2CC !important;

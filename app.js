@@ -6,7 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var todos = require('./routes/todos');
 var clean = require('./routes/clean');
+var repair = require('./routes/repair');
+var flower = require('./routes/flower');
+var iphone = require('./routes/iphone');
 var AV = require('leanengine');
+var wechat = require('./wechat/wechat.js');
 
 var app = express();
 
@@ -87,9 +91,17 @@ app.get("/user/checkPhone/:phone/:code", function(req, res) {
 
 });
 
+
+app.get('/api/getWechatToken/', wechat.getWechatToken);
+app.get('/api/getWechatJsapiTicket/', wechat.getWechatJsapiTicket);
+app.get('/api/getWechatJsapiSign/', wechat.getWechatJsapiSign);
+
 // 可以将一类的路由单独保存在一个文件中
 app.use('/todos', todos);
 app.use("/clean", clean);
+app.use("/repair", repair);
+app.use("/flower", flower);
+app.use("/iphone", iphone);
 
 app.use(function(req, res, next) {
 	// 如果任何一个路由都没有返回响应，则抛出一个 404 异常给后续的异常处理器

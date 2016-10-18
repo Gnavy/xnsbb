@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="/css/xns-bb.css" />
 		<link rel="stylesheet" href="/css/swiper-3.3.1.min.css">
 		<link rel="stylesheet" type="text/css" href="/aui/css/aui.2.0.css" />
-		<script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.staticfile.org/jquery/2.2.1/jquery.min.js"></script>
 		<script src="/js/swiper-3.3.1.min.js"></script>
 
 	</head>
@@ -17,7 +17,9 @@
 		<div class="swiper-container">
 			<div class="swiper-wrapper">
 				<% for(var i=0; i<swiper.length; i++) {%>
-				<div class="swiper-slide"><a href="<%=swiper[i].get('SwiperUrl')%>"><img class="swiper-myimg" src="<%=swiper[i].get('SwiperImg').thumbnailURL(400, 400)%>"></a></div>
+				<div class="swiper-slide">
+					<a href="<%=swiper[i].get('SwiperUrl')%>"><img class="swiper-myimg" src="<%=swiper[i].get('SwiperImg').thumbnailURL(400, 400)%>"></a>
+				</div>
 				<%}%>
 			</div>
 		</div>
@@ -38,8 +40,10 @@
 						</a>
 					</div>
 					<div class="aui-col-xs-6">
-						<img class="nav-icon" src="/image/tools.png">
-						<div class="aui-grid-label">家电维修</div>
+						<a href="/iphone">
+							<img class="nav-icon" src="/image/smartphone.png">
+							<div class="aui-grid-label">iPhone换屏</div>
+						</a>
 					</div>
 					<div class="aui-col-xs-6">
 						<img class="nav-icon" src="/image/driller.png">
