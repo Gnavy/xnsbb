@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>支付支付</title>
+	</head>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+	<body>
+		<script>
+			function onBridgeReady() {
+				var payargs = '<%=payargs%>';
+				payargs = payargs.replace(/&#34;/g,'"')
+				WeixinJSBridge.invoke(
+					"getBrandWCPayRequest", JSON.parse(payargs),
+					function(res) {
+						if(res.err_msg == "get_brand_wcpay_request:ok") {
+							// success
+						}
+					});
+			}
+			if(typeof WeixinJSBridge == "undefined") {
+				if(document.addEventListener) {
+					document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+				} else if(document.attachEvent) {
+					document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+					document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+				}
+			} else {
+				onBridgeReady();
+			}
+		</script>
+	</body>
+
+</html>

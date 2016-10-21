@@ -9,20 +9,60 @@
 		<link rel="stylesheet" type="text/css" href="/aui/css/aui.2.0.css" />
 		<link rel="stylesheet" type="text/css" href="/css/animate.css" />
 		<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+		<script type="text/javascript" src="/aui/script/aui-toast.js"></script>
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	</head>
 
-	<body class="animated zoomIn">
+	<body class="">
 		<section class="aui-content-padded">
-			
+
 			<div style="text-align: center;margin-top: 100px;">
 				<img src="../image/suc.png" />
 				<p></p>
 				<p>下单成功</p>
-				<p>我们会尽快处理您的订单</p>
-				<p>订单号:<%=orderNo%></p>
+				<p>支付后处理您的订单</p>
+				<br/>
+				<br/>
+				<br/>
+				<p>
+					<div class="aui-btn aui-btn-info aui-btn-block aui-btn-sm" onclick="doPay();">马上支付</div>
+				</p>
 			</div>
 		</section>
-		
+		<script>
+			toast = new auiToast({})
+
+			function doPay() {
+				toast.loading({
+					title: "加载中",
+					duration: 5000
+				});
+
+				$.get("/xnsbb/pay/<%=orderId%>/<%=orderTp%>", function(res) {
+					toast.hide();
+					if(!res.err) {
+
+						var payargs = res;
+						//						payargs = payargs.replace(/&#34;/g, '"')
+						WeixinJSBridge.invoke(
+							"getBrandWCPayRequest", payargs,
+							function(res) {
+								if(res.err_msg == "get_brand_wcpay_request:ok") {
+									// success
+									toast.loading({
+										title: "支付成功",
+										duration: 5000
+									});
+									window.location="https://xnsbb.leanapp.cn/myorder/";
+								}
+							});
+					} else {
+						alert(res.err);
+					}
+
+				});
+			}
+		</script>
 	</body>
 
 </html>

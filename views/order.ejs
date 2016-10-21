@@ -288,7 +288,7 @@
 						}, function(ret) {
 							console.log(ret)
 						})
-						$("#promotionCode").css("color", "greenyellow");
+						$("#promotionCode").css("color", "green");
 					} else {
 						dialog.alert({
 							title: "错误提示",
@@ -319,7 +319,8 @@
 			var dialog = new auiDialog({})
 
 			function openDialog() {
-
+			
+//									$("#userOrder").submit();
 				if(allPrice==0){
 					dialog.alert({
 						title: "错误提示",

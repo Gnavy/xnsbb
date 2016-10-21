@@ -6,6 +6,50 @@ var cache = require('memory-cache');
 var appId = "wxe856936b8d520631";
 var appSec = "b88d9b2f63a90df4cd217fd200ae22c8";
 
+exports.getWechatOpenid = function(code, callback) {
+
+	getWechatOpenid(code, callback);
+};
+
+function getWechatOpenid(code, callback) {
+
+	var wechat_token_url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appId + "&secret=" + appSec + "&code=" + code + "&grant_type=authorization_code";
+	request(wechat_token_url, function(error, response, body) {
+		if(!error && response.statusCode == 200) {
+			callback(body)
+		} else {
+			callback(error)
+		}
+	});
+}
+exports.sendMsgToAdmin = function(msg) {
+
+	sendMsgToAdmin(msg)
+}
+
+function sendMsgToAdmin(msg) {
+	getWechatToken({}, function(err, token) {
+		var wechat_url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + token;
+
+		var options = {
+			headers: {
+				"Connection": "close"
+			},
+			url: wechat_url,
+			method: 'POST',
+			json: true,
+			body: msg
+		};
+
+		function callback(error, response, data) {
+			if(!error && response.statusCode == 200) {
+				console.log('----info------', data);
+			}
+		}
+		request(options, callback);
+	})
+}
+
 /**
  * 获取微信access_token，根据 http://mp.weixin.qq.com/wiki/15/54ce45d8d30b6bf6758f68d2e95bc627.html 要求，7200秒请求一次
  * @callmethod GET

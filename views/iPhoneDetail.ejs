@@ -11,7 +11,7 @@
 		<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
 		<script src="/aui/script/api.js"></script>
 		<script src="/aui/script/aui-dialog.js"></script>
-
+		<script type="text/javascript" src="/aui/script/aui-toast.js"></script>
 		<script src="/js/mobiscroll.2.17.0.min.js"></script>
 		<script type="text/javascript" src="/js/common.js"></script>
 		<script type="text/javascript">
@@ -78,16 +78,15 @@
 			<div class="aui-card-list">
 				<div class="aui-card-list-header">
 					<b>填写订单信息</b>
-					<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe856936b8d520631&redirect_uri=https%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60&response_type=code&scope=snsapi_base&state=123#wechat_redirect">测试</a>
 				</div>
 			</div>
 		</section>
-		<form id="userOrder" action="/clean/orderSubmit" method="post">
+		<form id="userOrder" action="/iphone/takeOrder" method="post">
 			<section class="aui-content-padded">
 				<section class="aui-grid aui-margin-b-15 " style="background: #fff;">
 					<div class="aui-row">
 						<div class="aui-col-xs-4">
-							<img id="IMG" class="nav-icon" src="../image/loading.gif">
+							<img id="IMG" class="nav-icon" src="/image/loading.gif">
 							<div class="aui-grid-label">
 							</div>
 						</div>
@@ -95,10 +94,11 @@
 							<h4 id="SER">正在加载..</h4>
 							<h4 id="PRI">正在加载..</h4>
 
-							<input type="hidden" value="" name="itemID" />
+							<input type="hidden" value="<%=itemId%>" name="itemId" />
+							<input type="hidden" value="<%=where%>" name="where" />
 						</div>
 					</div>
-					<div class="aui-row" style="border-top: 1px solid #F5F5F5;text-align: right; padding: 1rem;font-size: 12px;">					
+					<div class="aui-row" style="border-top: 1px solid #F5F5F5;text-align: right; padding: 1rem;font-size: 12px;">
 						<span id="allPrice" style="font-size: 18px;font-weight: 300;">总价：￥100</span>
 					</div>
 					<script>
@@ -112,10 +112,10 @@
 						}
 						$("#PRI").html("单价：￥" + price);
 						$("#SER").html("项目：" + "<%=item.get('name')%>" + srv);
-						$("#IMG").attr("src", "<%=item.get('img').thumbnailURL(200, 200) %>%>");	
-						$("#allPrice").html("总价：￥ " + price );
+						$("#IMG").attr("src", "<%=item.get('img').thumbnailURL(200, 200) %>%>");
+						$("#allPrice").html("总价：￥ " + price);
 					</script>
-					
+
 				</section>
 
 			</section>
@@ -293,21 +293,22 @@
 				countPrice();
 			});
 
-//			function countPrice() {
-//				var code = $("#promotionCode").val();
-//				if($("#promotionCode").val() == "") {
-//					code = 1;
-//				}
-//
-//				$.get("/clean/getProPrice/" + allPrice + "/" + allCount + "/" + code, function(res) {
-//					$("#yuanjia").html("原价：<s>￥ -" + allPrice + "</s>")
-//					$("#promotion").html("折扣：￥ -" + res.promotion)
-//					$("#allPrice").html("总价：￥" + (allPrice - res.promotion));
-//				});
-//			}
+			//			function countPrice() {
+			//				var code = $("#promotionCode").val();
+			//				if($("#promotionCode").val() == "") {
+			//					code = 1;
+			//				}
+			//
+			//				$.get("/clean/getProPrice/" + allPrice + "/" + allCount + "/" + code, function(res) {
+			//					$("#yuanjia").html("原价：<s>￥ -" + allPrice + "</s>")
+			//					$("#promotion").html("折扣：￥ -" + res.promotion)
+			//					$("#allPrice").html("总价：￥" + (allPrice - res.promotion));
+			//				});
+			//			}
 			var dialog = new auiDialog({})
 
 			function openDialog() {
+				//测试代码
 
 				if(!checkInput()) {
 					dialog.alert({
@@ -320,9 +321,6 @@
 					return
 				}
 
-				//测试代码
-				//测试代码
-
 				$.get("/user/requestSms/" + $("#phoneNumber").val(), function(res) {
 					if(res.res) {
 						dialog.prompt({
@@ -333,6 +331,7 @@
 							console.log(ret)
 							$.get("/user/checkPhone/" + $("#phoneNumber").val() + "/" + ret.text, function(res) {
 								if(res.res) {
+				
 									$("#userOrder").submit();
 								}
 							});
