@@ -38,7 +38,7 @@
 		<ul class="tabs">
 			<li>
 				<input type="radio" name="tabs" id="tab1" checked />
-				<label for="tab1">内屏故障</label>
+				<label for="tab1">外屏故障</label>
 
 				<section class="aui-content-padded  tab-content" id="tab-content1">
 					<section class="aui-grid aui-margin-b-15" style="background: #fff; color: #fff;">
@@ -48,7 +48,7 @@
 							<script>
 								itemsIdx["<%=items[i].get('id')%>"] = 0;
 							</script>
-							<a  href="iphone/detail/<%=items[i].get('id')%>/0">
+							<a  href="iphone/detail/<%=items[i].get('id')%>/1">
 								<div class="aui-col-xs-4 cleanItem" itemId="<%=items[i].get('id')%>">
 									<!--<a href="/clean/detail/<%=items[i].get('id')%>">-->
 									<!--<div class="aui-badge"></div>-->
@@ -57,8 +57,8 @@
 										<%= items[i].get('name') %>
 									</div>
 									<div class="aui-grid-label" style="color: #333333;font-size: 12px;">
-										内屏：
-										<%= items[i].get('innerGlassPrice')%> 元
+										外屏：
+										<%= items[i].get('outerGlassPrice')%> 元
 									</div>
 
 									<!--</a>-->
@@ -71,7 +71,7 @@
 			</li>
 			<li>
 				<input type="radio" name="tabs" id="tab2" />
-				<label for="tab2">外屏故障</label>
+				<label for="tab2">内屏故障</label>
 				<section class="aui-content-padded tab-content" id="tab-content2">
 					<section class="aui-grid aui-margin-b-15 " style="background: #fff; color: #fff;">
 						<div class="aui-row">
@@ -80,7 +80,7 @@
 							<script>
 								itemsIdx["<%=items[i].get('id')%>"] = 0;
 							</script>
-							<a href="iphone/detail/<%=items[i].get('id')%>/1">
+							<a href="iphone/detail/<%=items[i].get('id')%>/0">
 								<div class="aui-col-xs-4 cleanItem" itemId="<%=items[i].get('id')%>">
 									<!--<a href="/clean/detail/<%=items[i].get('id')%>">-->
 									<!--<div class="aui-badge"></div>-->
@@ -89,8 +89,8 @@
 										<%= items[i].get('name') %>
 									</div>
 									<div class="aui-grid-label" style="color: #333333;font-size: 12px;">
-										外屏：
-										<%= items[i].get('outerGlassPrice')%> 元
+										内屏：
+										<%= items[i].get('innerGlassPrice')%> 元
 									</div>
 									<!--</a>-->
 								</div>

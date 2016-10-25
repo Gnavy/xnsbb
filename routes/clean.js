@@ -201,7 +201,6 @@ router.post('/orderSubmit', function(req, res, next) {
 		}
 		cleanOrder.set('price', Number(allPrice));
 		cleanOrder.set('des', des);
-		console.log("Clean customer's openid is :" + currentUser.get('authData').weixin.openid);
 		cleanOrder.save().then(function(order) {
 			var relation = currentUser.relation('CleanOrder');
 			relation.add(order);

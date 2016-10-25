@@ -61,9 +61,9 @@ router.get('/pay', function(req, res, next) {
 		partner_key: '7cS2iRIZpuI59OIIkpJ6E9vubuKI60Vs',
 		pfx: fs.readFileSync('apiclient_cert.p12')
 	});
-	console.log("iphone's openid is :" + currentUser.get('authData').weixin.openid);
+	
 	wxpay.getBrandWCPayRequestParams({
-		openid: currentUser.get('authData').weixin.openid,
+		openid: cache.get(currentUser.id),
 		body: '公众号支付测试',
 		detail: '公众号支付测试',
 		out_trade_no: '20150331' + Math.random().toString().substr(2, 10),

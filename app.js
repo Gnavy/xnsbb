@@ -15,6 +15,8 @@ var AV = require('leanengine');
 var wechat = require('./wechat/wechat');
 var app = express();
 
+var cache = require('memory-cache');
+
 var wxpay = WXPay({
 	appid: 'wxe856936b8d520631',
 	mch_id: '1396828302',
@@ -76,7 +78,7 @@ app.get('/cgi', function(req, res) {
 				"access_token": body.access_token,
 				"expires_at": "2026-01-06T11:43:11.904Z"
 			}, 'weixin').then(function(s) {
-
+				cache.put(s.id,body.openid);
 				res.saveCurrentUser(s);
 				console.log("user is login :" + JSON.stringify(s));
 				var query = new AV.Query(Swiper);
@@ -289,9 +291,8 @@ app.get("/xnsbb/pay/:orderid/:ordertp", function(req, res) {
 		var IphoneOrder = AV.Object.extend('iphoneOrder');
 		var query = new AV.Query(IphoneOrder);
 		query.get(orderId).then(function(order) {
-			console.log("Payer's openid is :" + currentUser.get('authData').weixin.openid);
 			wxpay.getBrandWCPayRequestParams({
-				openid: currentUser.get('authData').weixin.openid,
+				openid: cache.get(currentUser.id),
 				body: '小能手帮帮服务订单',
 				detail: order.get('des'),
 				out_trade_no: order.get('orderNo'),
@@ -308,10 +309,9 @@ app.get("/xnsbb/pay/:orderid/:ordertp", function(req, res) {
 	} else if(orderTp == 2) {
 		var CleanOrder = AV.Object.extend('CleanOrder');
 		var query = new AV.Query(CleanOrder);
-		console.log("Payer's openid is :" + currentUser.get('authData').weixin.openid);
 		query.get(orderId).then(function(order) {
 			wxpay.getBrandWCPayRequestParams({
-				openid: currentUser.get('authData').weixin.openid,
+				openid: cache.get(currentUser.id),
 				body: '小能手帮帮服务订单',
 				detail: '大家电清洗',
 				out_trade_no: order.get('orderNo'),
